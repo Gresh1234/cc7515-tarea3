@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Boat.gd" type="Script" id=1]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 2, 1, 4 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 1, 0.5, 2 )
+
+[node name="Boat" type="RigidBody"]
+linear_damp = 1.0
+angular_damp = 2.0
+script = ExtResource( 1 )
+
+[node name="Mesh" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )
+
+[node name="FloatyRR" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.5, -2 )
+
+[node name="FloatyRL" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.5, -2 )
+
+[node name="FloatyFR" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.5, 2 )
+
+[node name="FloatyFL" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.5, 2 )
