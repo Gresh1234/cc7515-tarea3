@@ -5,6 +5,7 @@ const float PI = 3.141592;
 
 // Se declaran algunas propiedades y variables internas:
 render_mode diffuse_burley, specular_schlick_ggx, cull_back, depth_draw_alpha_prepass;
+// Tiempo exterior al shader para sincronizarlo con las físicas
 uniform float outside_time;
 varying vec3 world_position;
 varying vec2 tex_position;
@@ -54,6 +55,7 @@ vec3 GerstnerWave(vec4 wave, vec3 p, inout vec3 tangent, inout vec3 binormal, fl
 
 // Vertex shader:
 void vertex() {
+	// Posición global c/r al mundo para alinearlo con las físicas
 	world_position = (WORLD_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	tex_position = world_position.xz;
 	outside_timeN = outside_time/1000.0;
@@ -77,12 +79,16 @@ void vertex() {
 }
 
 void fragment() {
+	// Efecto fresnel para que el agua se vea más reflectante
 	float fresnel = sqrt(1.0 - dot(NORMAL, VIEW));
 	
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
 	ALBEDO = albedo.rgb + (fresnel_factor * fresnel);
 	
+	// Se genera una textura para el normal map a partir de la superposición de
+	// los desplazamientos y escalas de ambas olas, con la textura de ruido
+	// proveída en el material
 	vec3 normalmape = texture(normalmap, tex_position * max(0.01, WaveAN.z) - outside_timeN * WaveA.xy * time_factor).xyz + 
 	texture(normalmap, tex_position * max(0.01, WaveBN.z) - outside_timeN * WaveB.xy * time_factor).xyz;
 	NORMALMAP = normalize(normalmape);
