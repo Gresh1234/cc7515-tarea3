@@ -8,3 +8,5 @@ Está basado principalmente en estos dos artículos:
 - https://docs.godotengine.org/en/stable/tutorials/shading/your_first_shader/your_second_spatial_shader.html
 
 En la parte de Releases están los archivos ejecutables.
+
+Demo disponible en https://youtu.be/nEbQIa9xNZ8.
